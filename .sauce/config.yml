@@ -19,12 +19,12 @@ suites:
   platformName: "macOS 11.00"
   config:
     specPattern:
-    - ['test/unit/**/*.*']
+    - 'test/unit/features/**/*.*'
 - name: "Chrome on Windows"
   browser: "chrome"
   platformName: "Windows 11"
   config:
     specPattern:
-    - ['test/unit/**/*.*']
+    - 'test/unit/**/**/*.*'
 rootDir: .
 
