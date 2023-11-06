@@ -33,7 +33,7 @@ jobs:
             #       exit 1
             #     fi
 
-            - uses: ./
+            - uses: actions/checkout@v3
               with:
                 username: ${{ secrets.SAUCE_USERNAME }}
                 accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
