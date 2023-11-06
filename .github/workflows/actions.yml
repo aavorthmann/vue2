@@ -27,7 +27,7 @@ jobs:
       - name: unit test
         run: npm run test:unit
 
-  ssr-sfc test:
+  sfc test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
