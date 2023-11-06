@@ -11,17 +11,15 @@ on:
 jobs:
     test:
         runs-on: ubuntu-latest
-        name: Action Test
+        name: Sauce Connect Proxy Action
         steps:
-            - name: Sauce Connect Proxy Action
-              uses: saucelabs/sauce-connect-action@v2.3.2
+            - uses: saucelabs/sauce-connect-action@v2.3.2
             
             - uses: actions/checkout@v3
 
             - uses: actions/setup-node@v3
               with:
                 node-version: 16
-
             - name: "Install Dependencies"
               run: npm install
 
