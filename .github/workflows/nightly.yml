@@ -9,7 +9,7 @@ on:
 env:
   SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
   SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
-  GITHUB_TOKEN: ${{ github.token }}
+  GITHUB_TOKEN: ${{github.token}}
 
 jobs:
   main:
@@ -20,6 +20,8 @@ jobs:
 
       - name: Saucectl RUN
         uses: saucelabs/saucectl-run-action@v3
+        with: 
+          config-file: .sauce/config.yml
   nightly-tests:
     strategy:
       matrix:
