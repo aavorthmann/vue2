@@ -1,4 +1,4 @@
-name: Nightly Saucelabs Tests
+name: Nightly Saucelabs Test Suite
 
 on:
   pull_request:
