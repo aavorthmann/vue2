@@ -11,7 +11,6 @@ on:
 jobs:
     test:
         runs-on: ubuntu-latest
-        name: Sauce Connect Proxy Action
         steps:
             - uses: saucelabs/sauce-connect-action@v2.3.2
             
