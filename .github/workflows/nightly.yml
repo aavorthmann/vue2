@@ -9,50 +9,50 @@ on:
 
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: saucelabs/sauce-connect-action@v2.3.2
-            
-            - uses: actions/checkout@v3
+  test:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: saucelabs/sauce-connect-action@v2.3.2
+        
+        - uses: actions/checkout@v3
 
-            - uses: actions/setup-node@v3
-              with:
-                node-version: 16
-            - name: "Install Dependencies"
-              run: npm install
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 16
+        - name: "Install Dependencies"
+          run: npm install
 
-            # - name: "Build the package"
-            #   run: npm run build
+        # - name: "Build the package"
+        #   run: npm run build
 
-            # - name: "Check if new build was checked in"
-            #   run: |
-            #     if [ $(git status --porcelain | wc -l) -gt 0 ] ; then
-            #       echo "Found uncommited changes. Did you forget to check in the dist/ folder?"
-            #       git status --porcelain
-            #       exit 1
-            #     fi
+        # - name: "Check if new build was checked in"
+        #   run: |
+        #     if [ $(git status --porcelain | wc -l) -gt 0 ] ; then
+        #       echo "Found uncommited changes. Did you forget to check in the dist/ folder?"
+        #       git status --porcelain
+        #       exit 1
+        #     fi
 
-            - uses: actions/checkout@v3
-              with:
-                username: ${{ secrets.SAUCE_USERNAME }}
-                accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
-                tunnelName: github-action-tunnel
-                tunnelPool: true
-                configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
+        - uses: actions/checkout@v3
+          with:
+            username: ${{ secrets.SAUCE_USERNAME }}
+            accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+            tunnelName: github-action-tunnel
+            tunnelPool: true
+            configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
 
-            - name: "Run Test"
-              # run: npm run test:unit
-              env:
-                SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-                SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        - name: "Run Test"
+          # run: npm run test:unit
+          env:
+            SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+            SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
 
-            suites:
-            - name: "Chrome on Windows"
-              browser: "chrome"
-              platformName: "Windows 11"
-              config:
-                specPattern: [ "test/unit/**/*.*" ]
+        suites:
+        - name: "Chrome on Windows"
+          browser: "chrome"
+          platformName: "Windows 11"
+          config:
+            specPattern: [ "test/unit/**/*.*" ]
 
 
 # jobs:
