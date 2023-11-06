@@ -1,0 +1,73 @@
+name: Nightly Saucelabs Tests
+
+on:
+  push:
+    branches:
+      - main
+  # schedule:
+  #   - cron "0 0 * * *"
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      name: Action Test
+      steps:
+          - uses: actions/checkout@v3
+
+          - uses: actions/setup-node@v3
+            with:
+              node-version: 16
+
+          - name: "Install Dependencies"
+            run: npm install
+
+          - uses: ./
+            with:
+              username: ${{ secrets.SAUCE_USERNAME }}
+              accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+              tunnelName: github-action-tunnel
+              tunnelPool: true
+              configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
+
+  # unit-test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Install npm
+  #       run: npm install
+
+  #     - name: unit test
+  #       run: npm run test:unit
+
+  # sfc-test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Install npm
+  #       run: npm install
+
+  #     - name: e2e test
+  #       run: npm run test:sfc
+
+  # e2e-test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Install npm
+  #       run: npm install
+
+  #     - name: e2e test
+  #       run: npm run test:e2e
+
+  # type-test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Install npm
+  #       run: npm install
+
+  #     - name: e2e test
+  #       run: npm run test:types
