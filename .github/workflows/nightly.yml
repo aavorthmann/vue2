@@ -13,6 +13,9 @@ jobs:
         runs-on: ubuntu-latest
         name: Action Test
         steps:
+            - name: Sauce Connect Proxy Action
+              uses: saucelabs/sauce-connect-action@v2.3.2
+            
             - uses: actions/checkout@v3
 
             - uses: actions/setup-node@v3
@@ -42,10 +45,17 @@ jobs:
                 configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
 
             - name: "Run Test"
-              run: npm run test:unit
+              # run: npm run test:unit
               env:
                 SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
                 SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+
+            suites:
+            - name: "Chrome on Windows"
+              browser: "chrome"
+              platformName: "Windows 11"
+              config:
+                specPattern: [ "test/unit/**/*.*" ]
 
 
 # jobs:
@@ -70,9 +80,9 @@ jobs:
 #             metadata:
 #               build: Github Run $GITHUB_RUN_ID
 #           rootDir: ./
-#           suites:
-#             - name: "Chrome on Windows"
-#               browser: "chrome"
-#               platformName: "Windows 11"
-#               config:
-#                 specPattern: [ "test/unit/**/*.*" ]
+          # suites:
+          #   - name: "Chrome on Windows"
+          #     browser: "chrome"
+          #     platformName: "Windows 11"
+          #     config:
+          #       specPattern: [ "test/unit/**/*.*" ]
