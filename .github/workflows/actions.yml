@@ -1,0 +1,15 @@
+name: Continuous Integration Tests
+
+on:
+  schedule:
+    # - cron "0 0 * * *"
+    - cron: "*/5 * * * *"
+
+env:
+  SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
+  SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
+
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    runCmd: npm run test:unit
