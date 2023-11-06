@@ -6,27 +6,26 @@ on:
       - main
   # schedule:
   #   - cron "0 0 * * *"
-  jobs:
-    test:
-      runs-on: ubuntu-latest
-      name: Action Test
-      steps:
-          - uses: actions/checkout@v3
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-          - uses: actions/setup-node@v3
-            with:
-              node-version: 16
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
-          - name: "Install Dependencies"
-            run: npm install
+      - name: "Install Dependencies"
+        run: npm install
 
-          - uses: ./
-            with:
-              username: ${{ secrets.SAUCE_USERNAME }}
-              accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
-              tunnelName: github-action-tunnel
-              tunnelPool: true
-              configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
+      - uses: ./
+        with:
+          username: ${{ secrets.SAUCE_USERNAME }}
+          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+          tunnelName: github-action-tunnel
+          tunnelPool: true
+          configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
 
   # unit-test:
   #   runs-on: ubuntu-latest
