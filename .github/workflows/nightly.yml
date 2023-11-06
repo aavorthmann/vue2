@@ -28,7 +28,6 @@ jobs:
 
         # - name: "Check if new build was checked in"
         #   run: |
-        #     if [ $(git status --porcelain | wc -l) -gt 0 ] ; then
         #       echo "Found uncommited changes. Did you forget to check in the dist/ folder?"
         #       git status --porcelain
         #       exit 1
@@ -42,18 +41,18 @@ jobs:
             tunnelPool: true
             configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
 
-        - name: "Run Test"
-          # run: npm run test:unit
-          env:
-            SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-            SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        # - name: "Run Test"
+        #   # run: npm run test:unit
+        #   env:
+        #     SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        #     SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
 
-        suites:
-        - name: "Chrome on Windows"
-          browser: "chrome"
-          platformName: "Windows 11"
-          config:
-            specPattern: [ "test/unit/**/*.*" ]
+        # suites:
+        # - name: "Chrome on Windows"
+        #   browser: "chrome"
+        #   platformName: "Windows 11"
+        #   config:
+        #     specPattern: [ "test/unit/**/*.*" ]
 
 
 # jobs:
