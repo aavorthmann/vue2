@@ -4,12 +4,33 @@ on:
   schedule:
     # - cron "0 0 * * *"
     - cron: "*/5 * * * *"
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
   SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
   SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
 
 jobs:
-  build: 
+  unit-test:
     runs-on: ubuntu-latest
-    runCmd: npm run test:unit
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm
+        uses: npm/action-setup@v2
+
+      - name: Set node version to 18
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - run: npm install
+
+      - name: Run unit tests
+        run: npm run test:unit
