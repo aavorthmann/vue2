@@ -1,0 +1,13 @@
+apiVersion: v1alpha
+suites:
+  - name: "Chrome on Windows"
+    browser: "chrome"
+    platformName: "Windows 11"
+    config:
+      testFiles:
+        - specPattern: [ "test/unit/**/*.*" ] 
+kind: cypress
+cypress:
+  configFile: "tsconfig.json"
+  version: "9.7.0"
+region: "us-west"
