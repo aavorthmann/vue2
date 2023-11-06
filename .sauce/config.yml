@@ -14,17 +14,17 @@ cypress:
   reporters: []
 tunnel-name: github-action-tunnel
 suites:
-- name: cypress - macos 11.00 - chrome
+- name: macos 11.00 - chrome
   browser: chrome
   platformName: "macOS 11.00"
   config:
     specPattern:
-    - 'test/unit/**/*.*'
+    - ['test/unit/**/*.*']
 - name: "Chrome on Windows"
   browser: "chrome"
   platformName: "Windows 11"
   config:
     specPattern:
-    - 'test/unit/**/*.*'
+    - ['test/unit/**/*.*']
 rootDir: .
 
