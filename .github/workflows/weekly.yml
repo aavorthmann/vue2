@@ -1,0 +1,21 @@
+name: Weekly Saucelabs Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm
+        run: npm install
+
+      - name: unit test
+        run: npm run test:unit
