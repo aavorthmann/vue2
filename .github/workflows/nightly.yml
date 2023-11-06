@@ -1,85 +1,25 @@
 name: Nightly Saucelabs Tests
 
 on:
+  pull_request:
   push:
+    paths:
+      - "v1"
     branches:
       - main
-  # schedule:
-  #   - cron "0 0 * * *"
 
+env:
+  SAUCE_USERNAME: ${{secrets.SAUCE_USERNAME}}
+  SAUCE_ACCESS_KEY: ${{secrets.SAUCE_ACCESS_KEY}}
 
 jobs:
-  test:
+  main:
     runs-on: ubuntu-latest
     steps:
-        - name: Sauce Connect Proxy Action
-          uses: saucelabs/sauce-connect-action@v2.3.2
-                    
-        - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 16
-        - name: "Install Dependencies"
-          run: npm install
-
-        # - name: "Build the package"
-        #   run: npm run build
-
-        # - name: "Check if new build was checked in"
-        #   run: |
-        #       echo "Found uncommited changes. Did you forget to check in the dist/ folder?"
-        #       git status --porcelain
-        #       exit 1
-        #     fi
-
-        - uses: actions/checkout@v3
-          with:
-            username: ${{ secrets.SAUCE_USERNAME }}
-            accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
-            tunnelName: github-action-tunnel
-            tunnelPool: true
-            configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
-
-        # - name: "Run Test"
-        #   # run: npm run test:unit
-        #   env:
-        #     SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-        #     SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-
-        # suites:
-        # - name: "Chrome on Windows"
-        #   browser: "chrome"
-        #   platformName: "Windows 11"
-        #   config:
-        #     specPattern: [ "test/unit/**/*.*" ]
-
-
-# jobs:
-#   test:
-#     runs-on: ubuntu-latest
-#     name: Action Test
-#     steps:
-#       - uses: actions/checkout@v3 
-#       - uses: saucelabs/sauce-connect-action@v2
-#         with:
-#           username: ${{ secrets.SAUCE_USERNAME }}
-#           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
-#           tunnelName: nightly-tests-tunnel
-#           configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
-#           tunnelPool: true
-#           configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
-#           apiVersion: v1
-#           kind: vitest
-#           sauce:
-#             region: us-west-1
-#             concurrency: 10 
-#             metadata:
-#               build: Github Run $GITHUB_RUN_ID
-#           rootDir: ./
-          # suites:
-          #   - name: "Chrome on Windows"
-          #     browser: "chrome"
-          #     platformName: "Windows 11"
-          #     config:
-          #       specPattern: [ "test/unit/**/*.*" ]
+      - name: Saucectl RUN
+        uses: saucelabs/saucectl-run-action@v3
+        with:
+          working-directory: v1alpha
