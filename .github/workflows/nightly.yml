@@ -20,8 +20,6 @@ jobs:
 
       - name: Saucectl RUN
         uses: saucelabs/saucectl-run-action@v3
-        with: 
-          config-file: .sauce/config.yml
   nightly-tests:
     strategy:
       matrix:
