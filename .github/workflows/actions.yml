@@ -24,5 +24,38 @@ jobs:
       - name: Install npm
         run: npm install
 
-      - name: test unit-test
+      - name: unit test
         run: npm run test:unit
+
+  ssr-sfc test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm
+        run: npm install
+
+      - name: e2e test
+        run: npm run test:sfc
+
+  e2e test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm
+        run: npm install
+
+      - name: e2e test
+        run: npm run test:e2e
+
+  type test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm
+        run: npm install
+
+      - name: e2e test
+        run: npm run test:types
