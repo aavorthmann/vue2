@@ -16,7 +16,7 @@ no-ssl-bump-domains: []
 pac: ""
 pidfile: ""
 proxy: ""
-proxy-tunnel: false
+proxy-tunnel: true
 proxy-userpwd: ""
 readyfile: ""
 region: "us-west"
@@ -27,6 +27,6 @@ scproxy-write-limit: 0
 se-port: 0
 shared-tunnel: false
 tunnel-domains: []
-tunnel-name: ""
+tunnel-name: "nightly-tests-tunnel"
 user: ""
 verbose: 0

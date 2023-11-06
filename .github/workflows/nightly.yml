@@ -6,67 +6,73 @@ on:
       - main
   # schedule:
   #   - cron "0 0 * * *"
+
+
 jobs:
-  nightly-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+    test:
+        runs-on: ubuntu-latest
+        name: Action Test
+        steps:
+            - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
+            - uses: actions/setup-node@v3
+              with:
+                node-version: 16
 
-      - name: "Install Dependencies"
-        run: npm install
+            - name: "Install Dependencies"
+              run: npm install
 
-      - uses: actions/checkout@v3
-        with:
-          username: ${{ secrets.SAUCE_USERNAME }}
-          accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
-          tunnelName: github-action-tunnel
-          tunnelPool: true
-          configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
+            - name: "Build the package"
+              run: npm run build
 
-  # unit-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+            - name: "Check if new build was checked in"
+              run: |
+                if [ $(git status --porcelain | wc -l) -gt 0 ] ; then
+                  echo "Found uncommited changes. Did you forget to check in the dist/ folder?"
+                  git status --porcelain
+                  exit 1
+                fi
 
-  #     - name: Install npm
-  #       run: npm install
+            - uses: ./
+              with:
+                username: ${{ secrets.SAUCE_USERNAME }}
+                accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+                tunnelName: github-action-tunnel
+                tunnelPool: true
+                configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
 
-  #     - name: unit test
-  #       run: npm run test:unit
+            - name: "Run Test"
+              run: npm run test:unit
+              env:
+                SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+                SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
 
-  # sfc-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
 
-  #     - name: Install npm
-  #       run: npm install
-
-  #     - name: e2e test
-  #       run: npm run test:sfc
-
-  # e2e-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-
-  #     - name: Install npm
-  #       run: npm install
-
-  #     - name: e2e test
-  #       run: npm run test:e2e
-
-  # type-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-
-  #     - name: Install npm
-  #       run: npm install
-
-  #     - name: e2e test
-  #       run: npm run test:types
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     name: Action Test
+#     steps:
+#       - uses: actions/checkout@v3 
+#       - uses: saucelabs/sauce-connect-action@v2
+#         with:
+#           username: ${{ secrets.SAUCE_USERNAME }}
+#           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
+#           tunnelName: nightly-tests-tunnel
+#           configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
+#           tunnelPool: true
+#           configFile: ${{ github.workspace }}/.github/workflows/sc/config.yaml
+#           apiVersion: v1
+#           kind: vitest
+#           sauce:
+#             region: us-west-1
+#             concurrency: 10 
+#             metadata:
+#               build: Github Run $GITHUB_RUN_ID
+#           rootDir: ./
+#           suites:
+#             - name: "Chrome on Windows"
+#               browser: "chrome"
+#               platformName: "Windows 11"
+#               config:
+#                 specPattern: [ "test/unit/**/*.*" ]
