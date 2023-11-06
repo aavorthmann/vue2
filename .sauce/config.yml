@@ -18,13 +18,13 @@ suites:
   browser: chrome
   platformName: "macOS 11.00"
   config:
-    testingType: e2e
     specPattern:
-    - '**/*.*'
+    - 'test/unit/**/*.*'
+- name: "Chrome on Windows"
+  browser: "chrome"
+  platformName: "Windows 11"
+  config:
+    specPattern:
+    - 'test/unit/**/*.*'
 rootDir: .
-artifacts:
-  download:
-    match:
-    - '*'
-    when: fail
-    directory: ./artifacts
+
