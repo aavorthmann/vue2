@@ -18,8 +18,8 @@ env:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    
-    - name: Install npm
-      run: npm install
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install npm
+        run: npm install
