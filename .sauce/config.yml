@@ -5,7 +5,7 @@ suites:
     platformName: "Windows 11"
     config:
       testFiles:
-        - specPattern: [ "test/unit/**/*.*" ] 
+        [ "test/unit/**/*.*" ] 
 kind: cypress
 cypress:
   configFile: "tsconfig.json"
